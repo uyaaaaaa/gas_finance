@@ -11,23 +11,4 @@ class utils {
 
     return Utilities.formatDate(today, "JST", format);
   }
-
-  /**
-   * @param {string} val 
-   * @param {null|number} date
-   * @return {Date}
-   */
-  convertYYYYMMtoDate(val, date = 1) {
-    const regex = /^\d{4}\/\d{2}$/;
-
-    if (!regex.test(val)) {
-      throw new Error("Invalid format: val is not 'YYYY/MM' format.")
-    }
-
-    const parts = val.split('/');
-    const year = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10) - 1;
-
-    return new Date(year, month, date);
-  }
 }

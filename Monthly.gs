@@ -3,7 +3,6 @@ class Monthly{
    * Constructor.
    */
   constructor() {
-    this.templateName = "テンプレ";
     this.utils = new utils();
     this.date_col = 1;
     this.sum_table_label_row = 41;
@@ -14,7 +13,7 @@ class Monthly{
    */
   createNewSheet() {
     const activeSheet = SpreadsheetApp.getActiveSpreadsheet();
-    const template = activeSheet.getSheetByName(this.templateName);
+    const template = activeSheet.getSheetByName("テンプレ");
     const newSheet = template.copyTo(activeSheet);
     
     const sheetName = this.getNextMonth();

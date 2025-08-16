@@ -15,8 +15,7 @@ class CashFlow{
    * Set asset amount of current month.
    */
   setCurrentAsset() {
-    const rowNum = this.utils.getRowNumOfCurrentMonth(this.sheet, this.getLastRow());
-    // const rotNum = this.findRow(this.utils.getMonth(MONTH["current"]), COLUMNS["a"]);
+    const rowNum = this.findRow(this.utils.getMonth(MONTH["current"]), COLUMNS["a"]);
     const amount = this.getCellValue(rowNum, COLUMNS["n"]);
 
     this.setCellValue(rowNum, COLUMNS["j"], amount);

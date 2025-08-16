@@ -13,26 +13,6 @@ class utils {
   }
 
   /**
-   * @param {SpreadsheetApp.Sheet} sheet
-   * @param {number} lastRow
-   * @param {null|number} col
-   * @return {number|false}
-   */
-  getRowNumOfCurrentMonth(sheet, lastRow, col = 1) {
-    const currentMonth = this.getMonth(MONTH["current"]);
-    
-    for(let i = 1; i <= lastRow; i++) {
-      let target = sheet.getRange(i, col).getValue();
-
-      if(target == currentMonth){ 
-        return i;
-      }
-    }
-
-    return false;
-  }
-
-  /**
    * @param {string} val 
    * @param {null|number} date
    * @return {Date}

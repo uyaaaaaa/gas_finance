@@ -9,6 +9,15 @@ class utils {
     const today = new Date();
     today.setMonth(today.getMonth() + diff);
 
-    return Utilities.formatDate(today, "JST", format);
+    return Utilities.formatDate(today, TIMEZONE, format);
+  }
+
+  /**
+   * @param {number} str
+   * @param {number} end
+   * @return {number}
+   */
+  getCellDiff(str, end) {
+    return end - str + 1;
   }
 }

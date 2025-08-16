@@ -1,12 +1,10 @@
-class CashFlow{
+class CashFlow extends Sheet {
   /**
    * Constructor.
    */
   constructor() {
-    this.sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("CF管理");;
-    this.utils = new utils();
-    this.header_r = 1;
-    this.diff_last_and_latest = 4;
+    super();
+    this.sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("CF管理");
   }
 
   /**
@@ -30,7 +28,7 @@ class CashFlow{
 
     const values = [
       [
-        this.utils.getMonth(MONTH["next"]),
+        this.getNextMonth(),
         `=IFERROR(INDIRECT("'"&$A${next_month_r}&"'!$P$42"), 0)`,
         `=IFERROR(INDIRECT("'"&$A${next_month_r}&"'!$P$45"), 0)`,
         `=IFERROR(INDIRECT("'"&$A${next_month_r}&"'!$P$50"), 0)`,
@@ -55,7 +53,7 @@ class CashFlow{
     const str_c = COLUMNS["m"];
     const str_r = this.findRow("【資産管理】", str_c);
     const table_length = 12;
-    const table_width = this.getColDiff(str_c, COLUMNS["n"]);
+    const table_width = this.utils.getCellDiff(str_c, COLUMNS["t"]);
 
     const values = this.sheet.getRange(str_r, str_c, table_length, table_width);
     const range = this.sheet.getRange((str_r + count), str_c, table_length, table_width);
@@ -87,136 +85,36 @@ class CashFlow{
     if (end_r === 0) {
       end_r = this.getRowNumOfCurrentMonth();
       // update diff value
-      const actualDiffMonth = this.getMonthDiff(this.getCellValue(str_r, COLUMNS["a"]), this.getCellValue(end_r, COLUMNS["a"]));
-      this.setCellValue((this.getLastRow() - 1), COLUMNS["e"], actualDiffMonth);
+      const diff = this.utils.getCellDiff(str_r, end_r);
+      this.setCellValue((this.getLastRow() - 1), COLUMNS["e"], diff);
     }
 
     // display all rows once.
-    this.sheet.unhideRow(this.sheet.getRange(this.header_r, COLUMNS["a"], this.getLastRow(), 1));
+    this.sheet.unhideRow(this.sheet.getRange(this.header_r, COLUMNS["a"], this.getLastRow()));
 
     const range1rows = str_r - 2;
 
     // hide the range before start month
     if (range1rows > 0) {
-      const range1 = this.sheet.getRange((this.header_r + 1), COLUMNS["a"], range1rows, 1);
+      const range1 = this.sheet.getRange((this.header_r + 1), COLUMNS["a"], range1rows);
       this.sheet.hideRow(range1);
     }
 
-    const range2rows = this.getLatestRow() - end_r;
+    const range2rows = this.getRowNumOfCurrentMonth() - end_r;
 
     // hide the range after end month
     if (range2rows > 0) {
-      const range2 = this.sheet.getRange((end_r + 1), COLUMNS["a"], range2rows, 1);
+      const range2 = this.sheet.getRange((end_r + 1), COLUMNS["a"], range2rows);
       this.sheet.hideRow(range2);
     }
-  }
-
-  /**
-   * Get the row number in column [col] that matches [val].
-   * @param {string} val
-   * @param {number} col
-   * @return {number}
-   */
-  findRow(val, col) {
-    const values = this.getValues(this.header_r, col, this.getLastRow(), 1);
-
-    let arr_values = [];
-
-    for(var i = 0; i < values.length; i++){
-      arr_values.push(values[i][0]);
-    }
-
-    return arr_values.indexOf(val) + 1;
-  }
-
-  /**
-   * @return {number}
-   */
-  getLatestRow() {
-    return this.getLastRow() - this.diff_last_and_latest;
-  }
-
-  /**
-   * @param {number} str_c
-   * @param {number} end_c
-   * @return {number}
-   */
-  getColDiff(str_c, end_c) {
-    return end_c - str_c + 1;
   }
 
   /**
    * @return {number}
    */
   getRowNumOfCurrentMonth() {
-    const currentMonth = this.utils.getMonth(MONTH["current"]);
+    const currentMonth = this.getCurrentMonth();
 
     return this.findRow(currentMonth, COLUMNS["a"]);
-  }
-
-  /**
-   * @return {number}
-   */
-  getLastRow() {
-    return this.sheet.getLastRow();
-  }
-
-  /**
-   * @param {number} row
-   * @param {number} col
-   * @return {string}
-   */
-  getCellValue(row, col) {
-    return this.sheet.getRange(row, col).getValue();
-  }
-
-  /**
-   * @param {number} row
-   * @param {number} col
-   * @param {number} numRows
-   * @param {number} numColumns
-   * @return {array}
-   */
-  getValues(row, col, numRows, numColumns) {
-    return this.sheet.getRange(row, col, numRows, numColumns).getValues();
-  }
-
-  /**
-   * @param {number} row
-   * @param {number} col
-   * @param {string} val
-   */
-  setCellValue(row, col, val) {
-    this.sheet.getRange(row, col).setValue(val);
-  }
-
-  /**
-   * @param {number} row
-   * @param {number} col
-   * @param {number} numRows
-   * @param {number} numColumns
-   * @param {array} values
-   */
-  setValues(row, col, numRows, numColumns, values) {
-    this.sheet.getRange(row, col, numRows, numColumns).setValues(values);
-  }
-
-  /**
-   * @param {string} startMonth ex."2023/01"
-   * @param {string} endMonth   ex."2024/05"
-   * @return {number}
-   */
-  getMonthDiff(startMonth, endMonth) {
-    const startDate = new Date(startMonth + '/01');
-    const endDate = new Date(endMonth + '/01');
-
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-      throw new Error("Invalid format: 'yyyy/mm' is required.");
-    }
-
-    const years = endDate.getFullYear() - startDate.getFullYear();
-    const months = endDate.getMonth() - startDate.getMonth();
-    
-    return Math.abs(years * 12 + months) + 1;
   }
 }

@@ -1,3 +1,7 @@
+const MONTH_FORMAT = "yyyy/MM";
+
+const TIMEZONE = "JST";
+
 const COLUMNS = {
   "a": 1,
   "b": 2,
@@ -26,5 +30,3 @@ const MONTH = {
   "current": 0,
   "next": 1,
 }
-
-const MONTH_FORMAT = "yyyy/MM";

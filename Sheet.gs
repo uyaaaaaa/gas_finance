@@ -7,7 +7,6 @@ class Sheet {
    */
   constructor() {
     this.sheet;
-    // this.sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("CF管理");
     this.utils = new utils();
     this.header_r = 1;
   }
@@ -26,6 +25,24 @@ class Sheet {
    */
   getCellValue(row, col) {
     return this.sheet.getRange(row, col).getValue();
+  }
+
+  /**
+   * Get the row number in column [col] that matches [val].
+   * @param {string} val
+   * @param {number} col
+   * @return {number}
+   */
+  findRow(val, col) {
+    const values = this.getValues(this.header_r, col, this.getLastRow(), 1);
+
+    let arr_values = [];
+
+    for(var i = 0; i < values.length; i++){
+      arr_values.push(values[i][0]);
+    }
+
+    return arr_values.indexOf(val) + 1;
   }
 
   /**

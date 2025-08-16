@@ -1,9 +1,9 @@
-class Monthly{
+class Monthly extends Sheet {
   /**
    * Constructor.
    */
   constructor() {
-    this.utils = new utils();
+    super(); 
     this.date_col = 1;
     this.sum_table_label_row = 41;
   }
@@ -43,29 +43,5 @@ class Monthly{
 
     const protectionThis = sheet.protect();
     protectionThis.setDescription("fixed.");
-  }
-
-  /**
-   * @param {null|string} format
-   * @return {string}
-   */
-  getPreviousMonth(format = MONTH_FORMAT) {
-    return this.utils.getMonth(MONTH["prev"], format);
-  }
-
-  /**
-   * @param {null|string} format
-   * @return {string}
-   */
-  getCurrentMonth(format = MONTH_FORMAT) {
-    return this.utils.getMonth(MONTH["current"], format);
-  }
-
-  /**
-   * @param {null|string} format
-   * @return {string}
-   */
-  getNextMonth(format = MONTH_FORMAT) {
-    return this.utils.getMonth(MONTH["next"], format);
   }
 }

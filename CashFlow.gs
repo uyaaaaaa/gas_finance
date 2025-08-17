@@ -67,7 +67,7 @@ class CashFlow extends Sheet {
   changeReferenceMonth() {
     const target_r = this.getLastRow() - 1;
     const diffMonth = this.getCellValue(target_r, COLUMNS["e"]);
-    const refMonth = this.utils.getMonth(1 - diffMonth);
+    const refMonth = this.utils.getMonth(1 - diffMonth, this.default_format);
     
     this.setCellValue(target_r, COLUMNS["b"], refMonth);
   }

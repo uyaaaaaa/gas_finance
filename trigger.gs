@@ -66,6 +66,8 @@ class Trigger {
    * Create new trigger (no delete).
    */
   create() {
+    console.log(Utilities.formatDate(this.executeAt, "JST", "yyyy/MM/dd HH:mm"));
+
     ScriptApp.newTrigger(this.name)
       .timeBased()
       .at(this.executeAt)

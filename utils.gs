@@ -5,11 +5,11 @@ class utils {
    * @param {string} format
    * @return {string}
    */
-  getMonth(diff, format = MONTH_FORMAT) {
+  getMonth(diff, format) {
     const today = new Date();
     today.setMonth(today.getMonth() + diff);
 
-    return Utilities.formatDate(today, TIMEZONE, format);
+    return Utilities.formatDate(today, "JST", format);
   }
 
   /**

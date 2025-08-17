@@ -9,6 +9,7 @@ class Sheet {
     this.sheet;
     this.utils = new utils();
     this.header_r = 1;
+    this.default_format = "yyyy/MM";
   }
 
   /**
@@ -80,23 +81,23 @@ class Sheet {
    * @param {null|string} format
    * @return {string}
    */
-  getPreviousMonth(format = MONTH_FORMAT) {
-    return this.utils.getMonth(MONTH["prev"], format);
+  getPreviousMonth(format = this.default_format) {
+    return this.utils.getMonth(-1, format);
   }
 
   /**
    * @param {null|string} format
    * @return {string}
    */
-  getCurrentMonth(format = MONTH_FORMAT) {
-    return this.utils.getMonth(MONTH["current"], format);
+  getCurrentMonth(format = this.default_format) {
+    return this.utils.getMonth(0, format);
   }
 
   /**
    * @param {null|string} format
    * @return {string}
    */
-  getNextMonth(format = MONTH_FORMAT) {
-    return this.utils.getMonth(MONTH["next"], format);
+  getNextMonth(format = this.default_format) {
+    return this.utils.getMonth(1, format);
   }
 }

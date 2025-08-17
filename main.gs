@@ -17,14 +17,7 @@ function changeGraphRange() {
  * Run every day at pm 11:55 (by trigger).
  */
 function endOfMonth() {
-  const date = new Date();
-  const today = date.getDate();
-  date.setDate(today + 1);
-  const nextDay = date.getDate();
-  
-  if (nextDay !== 1) {
-    return;
-  }
+  setEndTrigger();
 
   new Monthly().hidePrevious();
   new Monthly().protectCurrent();
@@ -37,12 +30,7 @@ function endOfMonth() {
  * Run every day at am 1:00 ~ 2:00 (by trigger).
  */
 function startOfMonth() {
-  const date = new Date();
-  const today = date.getDate();
-
-  if (today !== 1) {
-    return;
-  }
+  setStartTrigger();
   
   new CashFlow().changeReferenceMonth();
   new CashFlow().changeGraphRange();
@@ -50,14 +38,44 @@ function startOfMonth() {
 
 /* ------------------------------------- */
 
-function setTrigger1() {
-  const nextMonth = 9;
-  const lastDayOfNextMonth = 28;
+function setEndTrigger() {
+  const nextMonth = this.getNextMonthNum();
+  const lastDayOfNextMonth = this.getLastDayOfNextMonth();
 
-  new Trigger("test")
+  new Trigger("endOfMonth")
     .setMonth(nextMonth)
     .setDate(lastDayOfNextMonth)
     .setHours(23)
-    .setMinutes(55)
+    .setMinutes(00)
     .update();
+}
+
+function setStartTrigger() {
+  const nextMonth = this.getNextMonthNum();
+
+  new Trigger("startOfMonth")
+    .setMonth(nextMonth)
+    .setDate(1)
+    .setHours(0)
+    .setMinutes(10)
+    .update();
+}
+
+function getNextMonthNum() {
+  const today = new Date();
+  const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+
+  return nextMonth.getMonth() + 1;
+}
+
+function getLastDayOfNextMonth() {
+  const today = new Date();
+  
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
+  
+  const nextMonthFirstDay = new Date(currentYear, currentMonth + 1, 1);
+  const lastDayOfNextMonth = new Date(nextMonthFirstDay.getFullYear(), nextMonthFirstDay.getMonth() + 1, 0);
+  
+  return lastDayOfNextMonth.getDate();
 }

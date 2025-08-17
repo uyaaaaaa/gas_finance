@@ -6,7 +6,15 @@ function createNewSheet() {
 }
 
 /**
- * Run every day at pm 10:00 ~ 11:00 (by trigger).
+ * Change the display range of asset table.
+ * NOTE: DO NOT DELETE THIS METHOD. This method is used by GUI button of SpreadSheet.
+ */
+function changeGraphRange() {
+  new CashFlow().changeGraphRange();
+}
+
+/**
+ * Run every day at pm 11:55 (by trigger).
  */
 function endOfMonth() {
   const date = new Date();
@@ -40,10 +48,16 @@ function startOfMonth() {
   new CashFlow().changeGraphRange();
 }
 
-/**
- * Change the display range of asset table.
- * NOTE: DO NOT DELETE THIS METHOD. This method is used by GUI button of SpreadSheet.
- */
-function changeGraphRange() {
-  new CashFlow().changeGraphRange();
+/* ------------------------------------- */
+
+function setTrigger1() {
+  const nextMonth = 9;
+  const lastDayOfNextMonth = 28;
+
+  new Trigger("test")
+    .setMonth(nextMonth)
+    .setDate(lastDayOfNextMonth)
+    .setHours(23)
+    .setMinutes(55)
+    .update();
 }

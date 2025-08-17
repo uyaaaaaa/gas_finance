@@ -82,7 +82,7 @@ class Sheet {
    * @return {string}
    */
   getPreviousMonth(format = this.default_format) {
-    return this.utils.getMonth(-1, format);
+    return this.utils.getFormattedMonth(-1, format);
   }
 
   /**
@@ -90,7 +90,7 @@ class Sheet {
    * @return {string}
    */
   getCurrentMonth(format = this.default_format) {
-    return this.utils.getMonth(0, format);
+    return this.utils.getFormattedMonth(0, format);
   }
 
   /**
@@ -98,6 +98,6 @@ class Sheet {
    * @return {string}
    */
   getNextMonth(format = this.default_format) {
-    return this.utils.getMonth(1, format);
+    return this.utils.getFormattedMonth(1, format);
   }
 }

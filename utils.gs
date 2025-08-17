@@ -5,7 +5,7 @@ class utils {
    * @param {string} format
    * @return {string}
    */
-  getMonth(diff, format) {
+  getFormattedMonth(diff, format) {
     const today = new Date();
     today.setMonth(today.getMonth() + diff);
 

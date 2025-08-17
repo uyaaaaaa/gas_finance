@@ -19,11 +19,14 @@ function changeGraphRange() {
 function endOfMonth() {
   setEndTrigger();
 
-  new Monthly().hidePrevious();
-  new Monthly().protectCurrent();
-  new CashFlow().setCurrentAsset();
-  new CashFlow().addNextRow();
-  new CashFlow().moveSummaryTable(1);
+  const monthly = new Monthly();
+  const cashflow = new CashFlow();
+
+  monthly.hidePrevious();
+  monthly.protectCurrent();
+  cashflow.setCurrentAsset();
+  cashflow.addNextRow();
+  cashflow.moveSummaryTable(1);
 } 
 
 /**
@@ -32,15 +35,16 @@ function endOfMonth() {
 function startOfMonth() {
   setStartTrigger();
   
-  new CashFlow().changeReferenceMonth();
-  new CashFlow().changeGraphRange();
+  const cashflow = new CashFlow();
+  cashflow.changeReferenceMonth();
+  cashflow.changeGraphRange();
 }
 
 /* ------------------------------------- */
 
-function setEndTrigger() {
-  const nextMonth = this.getNextMonthNum();
-  const lastDayOfNextMonth = this.getLastDayOfNextMonth();
+const setEndTrigger = () => {
+  const nextMonth = getNextMonthNum();
+  const lastDayOfNextMonth = getLastDayOfNextMonth();
 
   new Trigger("endOfMonth")
     .setMonth(nextMonth)
@@ -50,8 +54,8 @@ function setEndTrigger() {
     .update();
 }
 
-function setStartTrigger() {
-  const nextMonth = this.getNextMonthNum();
+const setStartTrigger = () => {
+  const nextMonth = getNextMonthNum();
 
   new Trigger("startOfMonth")
     .setMonth(nextMonth)
@@ -61,20 +65,14 @@ function setStartTrigger() {
     .update();
 }
 
-function getNextMonthNum() {
-  const today = new Date();
-  const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+const getNextMonthNum = () => {
+  return (new utils).getFormattedMonth(1, "M");
+};
 
-  return nextMonth.getMonth() + 1;
-}
-
-function getLastDayOfNextMonth() {
+const getLastDayOfNextMonth = () => {
   const today = new Date();
-  
-  const currentMonth = today.getMonth();
-  const currentYear = today.getFullYear();
-  
-  const nextMonthFirstDay = new Date(currentYear, currentMonth + 1, 1);
+
+  const nextMonthFirstDay = new Date(today.getFullYear(), today.getMonth() + 1, 1);
   const lastDayOfNextMonth = new Date(nextMonthFirstDay.getFullYear(), nextMonthFirstDay.getMonth() + 1, 0);
   
   return lastDayOfNextMonth.getDate();

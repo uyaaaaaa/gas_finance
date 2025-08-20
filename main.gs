@@ -1,4 +1,20 @@
 /**
+ * Create custom menu.
+ */
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu('GAS実行')
+    .addItem('シートを再表示', 'showHiddenSheet')
+    .addToUi();
+}
+
+/**
+ * Show hidden sheet.
+ */
+function showHiddenSheet() {
+}
+
+/**
  * Run on the 25th of every month (by trigger).
  */
 function createNewSheet() {

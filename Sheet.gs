@@ -35,15 +35,6 @@ class Sheet {
   }
 
   /**
-   * @param {number} row
-   * @param {number} col
-   * @return {string}
-   */
-  getCellValue(row, col) {
-    return this.sheet.getRange(row, col).getValue();
-  }
-
-  /**
    * Get the row number in column [col] that matches [val].
    * @param {string} val
    * @param {number} col
@@ -64,12 +55,10 @@ class Sheet {
   /**
    * @param {number} row
    * @param {number} col
-   * @param {number} numRows
-   * @param {number} numColumns
-   * @return {array}
+   * @return {string}
    */
-  getValues(row, col, numRows, numColumns) {
-    return this.sheet.getRange(row, col, numRows, numColumns).getValues();
+  getCellValue(row, col) {
+    return this.sheet.getRange(row, col).getValue();
   }
 
   /**
@@ -79,6 +68,17 @@ class Sheet {
    */
   setCellValue(row, col, val) {
     this.sheet.getRange(row, col).setValue(val);
+  }
+
+  /**
+   * @param {number} row
+   * @param {number} col
+   * @param {number} numRows
+   * @param {number} numColumns
+   * @return {array}
+   */
+  getValues(row, col, numRows, numColumns) {
+    return this.sheet.getRange(row, col, numRows, numColumns).getValues();
   }
 
   /**

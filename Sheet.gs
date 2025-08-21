@@ -13,6 +13,21 @@ class Sheet {
   }
 
   /**
+   * Check if [value] is 'YYYY/MM'.
+   * @param {*} value
+   * @returns {boolean}
+   */
+  isYYYYMM(value) {
+    if (typeof value !== 'string') {
+      return false;
+    }
+
+    const pattern = /^\d{4}\/(0[1-9]|1[0-2])$/;
+
+    return pattern.test(value);
+  }
+
+  /**
    * @return {number}
    */
   getLastRow() {

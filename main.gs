@@ -12,6 +12,21 @@ function onOpen() {
  * Show hidden sheet.
  */
 function showHiddenSheet() {
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.prompt('yyyy/mm形式で入力してください', ui.ButtonSet.OK_CANCEL);
+
+  if (response.getSelectedButton() != ui.Button.OK) {
+    return;
+  }
+
+  const inputValue = response.getResponseText();
+
+  if (typeof inputValue !== 'string') {
+    console.log('Invalid format.');
+    return;
+  }
+
+  new Monthly().showSheet(inputValue);
 }
 
 /**

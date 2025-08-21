@@ -26,6 +26,20 @@ class Monthly extends Sheet {
   }
 
   /**
+   * @param {string} sheetName
+   */
+  showSheet(sheetName) {
+    if (!this.isYYYYMM(sheetName)) {
+      console.log('Invalid format.');
+      return;
+    }
+
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+
+    sheet.showSheet();
+  }
+
+  /**
    * Hide the sheet of previous month.
    */
   hidePrevious() {
